@@ -1,6 +1,5 @@
 import os
 import base64
-import json
 from ytmusicapi import YTMusic
 import requests
 from dotenv import load_dotenv
@@ -45,7 +44,7 @@ def get_jams_from_item_shop():
 def search_and_add_tracks_to_playlist(playlist_id, tracks):
     videos = []
     for track in tracks:
-        search_results = yt.search(f"{track['artist']} {track['title']} {track.get('album', '')} {track.get('releaseYear', '')}")
+        search_results = yt.search(f"{track['artist']} {track['title']} {track.get('album') or ''} {track.get('releaseYear') or ''}")
         if search_results:
             videos.append(search_results[0]['videoId'])
             print(f"Added {track['title']} by {track['artist']} to the playlist.")
@@ -71,4 +70,5 @@ if __name__ == "__main__":
     print("Finished adding tracks to the playlist.")
     
     updated_oauth_json_base64 = save_oauth_json()
-    print(f"::set-output name=OAUTH_JSON_BASE64::{updated_oauth_json_base64}")
+    with open(os.environ['GITHUB_ENV'], 'a') as gh_env:
+        gh_env.write(f"OAUTH_JSON_BASE64={updated_oauth_json_base64}\n")
