@@ -2,8 +2,12 @@ name: Daily YouTube Music Playlist Update
 
 on:
   schedule:
-    - cron: '10 0 * * *'
+    - cron: '15 0 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
 
 jobs:
   update-playlist:
@@ -32,7 +36,10 @@ jobs:
         python YouTube.py
 
     - name: Update OAuth Secret
-      if: success()
-      run: |
-        echo "${{ steps.run_script.outputs.OAUTH_JSON_BASE64 }}" > oauth.json.base64
-        gh secret set OAUTH_JSON_BASE64 < oauth.json.base64
+      uses: punitkashyup/action-secrets-update@v1.0.6
+      with:
+        repository_owner: ${{ github.repository_owner }}
+        repository_name: ${{ github.event.repository.name }}
+        secret_name: OAUTH_JSON_BASE64
+        new_secret_value: ${{ steps.run_script.outputs.OAUTH_JSON_BASE64 }}
+        github_token: ${{ secrets.PAT }}

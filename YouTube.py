@@ -70,5 +70,4 @@ if __name__ == "__main__":
     print("Finished adding tracks to the playlist.")
     
     updated_oauth_json_base64 = save_oauth_json()
-    with open(os.environ['GITHUB_ENV'], 'a') as gh_env:
-        gh_env.write(f"OAUTH_JSON_BASE64={updated_oauth_json_base64}\n")
+    print(f"::set-output name=OAUTH_JSON_BASE64::{updated_oauth_json_base64}")
