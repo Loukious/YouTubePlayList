@@ -35,7 +35,7 @@ def get_jams_from_item_shop():
                         result["tracks"].append({
                             "title": track["title"],
                             "artist": track["artist"],
-                            "album": track["album"],
+                            "album": track.get("album", ""),
                             "releaseYear": track["releaseYear"]
                         })
                         seen_titles.add(track["title"])
