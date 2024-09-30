@@ -45,7 +45,7 @@ def search_and_add_tracks_to_playlist(playlist_id, tracks):
     videos = []
     for track in tracks:
         search_results = yt.search(f"{track['artist']} {track['title']} {track.get('album') or ''} {track.get('releaseYear') or ''}")
-        if search_results:
+        if search_results and 'videoId' in search_results[0]:
             videos.append(search_results[0]['videoId'])
             print(f"Added {track['title']} by {track['artist']} to the playlist.")
         else:
