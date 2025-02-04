@@ -1,6 +1,6 @@
 import os
 import base64
-from ytmusicapi import YTMusic
+from ytmusicapi import OAuthCredentials, YTMusic
 import requests
 from dotenv import load_dotenv
 
@@ -14,7 +14,7 @@ oauth_json = base64.b64decode(oauth_json_base64).decode('utf-8')
 with open('oauth.json', 'w') as f:
     f.write(oauth_json)
 
-yt = YTMusic('oauth.json')
+yt = YTMusic('oauth.json', oauth_credentials=OAuthCredentials(client_id=os.getenv('CLIENT_ID'), client_secret=os.getenv('CLIENT_SECRET')))
 
 def get_jams_from_item_shop():
     url = "https://fortnite-api.com/v2/shop"
