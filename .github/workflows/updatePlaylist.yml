@@ -32,6 +32,8 @@ jobs:
       env:
         OAUTH_JSON_BASE64: ${{ secrets.OAUTH_JSON_BASE64 }}
         PLAYLIST_ID: ${{ secrets.PLAYLIST_ID }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET}}
       run: |
         python YouTube.py
 
