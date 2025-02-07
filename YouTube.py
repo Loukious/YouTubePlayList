@@ -13,8 +13,9 @@ oauth_json = base64.b64decode(oauth_json_base64).decode('utf-8')
 # Write the decoded oauth.json to a file
 with open('oauth.json', 'w') as f:
     f.write(oauth_json)
-
-yt = YTMusic('oauth.json', oauth_credentials=OAuthCredentials(client_id=os.getenv('CLIENT_ID'), client_secret=os.getenv('CLIENT_SECRET')))
+s = requests.Session()
+s.request = functools.partial(s.request, timeout=60)
+yt = YTMusic('oauth.json', oauth_credentials=OAuthCredentials(client_id=os.getenv('CLIENT_ID'), client_secret=os.getenv('CLIENT_SECRET')), requests_session=s)
 
 def get_jams_from_item_shop():
     url = "https://fortnite-api.com/v2/shop"
