@@ -3,6 +3,7 @@ import base64
 from ytmusicapi import OAuthCredentials, YTMusic
 import requests
 from dotenv import load_dotenv
+import functools
 
 load_dotenv()
 
